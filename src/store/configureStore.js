@@ -1,11 +1,11 @@
 import {createStore, applyMiddleware} from 'redux';
-import rootReducer from '../reducers';
+import rootReducer from '../reducers/courseReducer';
 import reduxImmutableStateInvariant from 'redux-immutable-state-invariant';
 
-export default function configureStore(initialState) {
+export default function configureStore(initialState){
     return createStore(
         rootReducer,
         initialState,
-        applyMiddleware(reduxImmutableStateInvariant)
+        applyMiddleware(reduxImmutableStateInvariant())
     );
 }

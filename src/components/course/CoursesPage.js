@@ -17,14 +17,14 @@ class CoursesPage extends React.Component {
 		const course = this.state.course;
 		course.title = event.target.value;
 		this.setState({course: course});
-		console.log('course now is: ', this.state.course)
+		console.log('course now is: ', this.state.course);
 	}
 
 	OnClickSave() {
 		alert(`Saving ${this.state.course.title}`);
 	}
 
-	render() {
+	render() { 
 		return (
 			<div>
 				<h1>Courses</h1>

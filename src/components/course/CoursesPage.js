@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {PropTypes} from 'react';
 import {connect} from 'react-redux';
 import * as courseActions from '../../actions/courseActions';
 
@@ -12,6 +12,7 @@ class CoursesPage extends React.Component {
 
 		this.onTitleChange = this.onTitleChange.bind(this);
 		this.OnClickSave = this.OnClickSave.bind(this);
+		this.courseRow = this.courseRow.bind(this);
 
 	}
 
@@ -19,24 +20,33 @@ class CoursesPage extends React.Component {
 		const course = this.state.course;
 		course.title = event.target.value;
 		this.setState({course: course});
-		console.log('course now is: ', this.state.course);
 	}
 
 	OnClickSave() {
 		this.props.dispatch(courseActions.createCourse(this.state.course));
 	}
 
-	render() { 
+	courseRow(course, index) {
+		return <div key={index}>{course.title}</div>;
+	}
+
+	render() {
 		return (
 			<div>
 				<h1>Courses</h1>
+					{this.props.courses.map(this.courseRow)}
 				<h2>Add Course</h2>
-				<input type="text" onChange={this.onTitleChange} value={this.state.course.title} />
-				<input type="submit" value="Save" onClick={this.OnClickSave} />
+				<input type="text" onChange={this.onTitleChange} value={this.state.course.title}/>
+				<input type="submit" value="Save" onClick={this.OnClickSave}/>
 			</div>
 		);
 	}
 }
+
+CoursesPage.propTypes = {
+	dispatch: PropTypes.func.isRequired,
+	courses: PropTypes.array.isRequired
+};
 
 function mapStateToProps(state, ownProps) {
 	return {

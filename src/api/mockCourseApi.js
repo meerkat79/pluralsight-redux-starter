@@ -46,6 +46,12 @@ const courses = [
   }
 ];
 
+const errors = [
+  {
+    msg: 'failure to find values'
+  }
+];
+
 function replaceAll(str, find, replace) {
   return str.replace(new RegExp(find, 'g'), replace);
 }
@@ -60,6 +66,7 @@ class CourseApi {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
         resolve(Object.assign([], courses));
+        reject(Object.assign([], errors));
       }, delay);
     });
   }

@@ -6,38 +6,24 @@ class CoursesPage extends React.Component {
 	constructor(props, context) {
 		super(props, context);
 
-		this.state = {
-			course: {title: ''}
-		};
-
-		this.onTitleChange = this.onTitleChange.bind(this);
-		this.OnClickSave = this.OnClickSave.bind(this);
 		this.courseRow = this.courseRow.bind(this);
 
-	}
-
-	onTitleChange(event) {
-		const course = this.state.course;
-		course.title = event.target.value;
-		this.setState({course: course});
-	}
-
-	OnClickSave() {
-		this.props.dispatch(courseActions.createCourse(this.state.course));
 	}
 
 	courseRow(course, index) {
 		return <div key={index}>{course.title}</div>;
 	}
 
+	errorRow(error, index) {
+		return <div key={index}>{error.msg}</div>;
+	}	
+
 	render() {
 		return (
 			<div>
 				<h1>Courses</h1>
 					{this.props.courses.map(this.courseRow)}
-				<h2>Add Course</h2>
-				<input type="text" onChange={this.onTitleChange} value={this.state.course.title}/>
-				<input type="submit" value="Save" onClick={this.OnClickSave}/>
+					{this.props.errors ? this.props.errors.map(this.errorRow): ''}
 			</div>
 		);
 	}
@@ -45,12 +31,14 @@ class CoursesPage extends React.Component {
 
 CoursesPage.propTypes = {
 	dispatch: PropTypes.func.isRequired,
-	courses: PropTypes.array.isRequired
+	courses: PropTypes.array.isRequired,
+	errors: PropTypes.array.isRequired
 };
 
 function mapStateToProps(state, ownProps) {
 	return {
-		courses: state.courses
+		courses: state.courses,
+		errors: state.errors
 	};
 }
 
